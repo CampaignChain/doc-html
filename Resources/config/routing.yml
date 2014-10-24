@@ -1,0 +1,3 @@
+campaign_chain_doc_html_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CampaignChainDocHtmlBundle:Default:index }

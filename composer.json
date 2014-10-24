@@ -1,0 +1,17 @@
+{
+    "name": "campaignchain/doc-html",
+    "description": "Documentation of CampaignChain in HTML format.",
+    "keywords": ["documentation"],
+    "type": "campaignchain-doc",
+    "homepage": "http://doc.campaignchain.com",
+    "license": "CC-BY-SA-3.0",
+    "authors": [
+        {
+            "name": "Sandro Groganz",
+            "email": "sandro@campaignchain.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "CampaignChain\\DocHtmlBundle\\": "" }
+    }
+}
