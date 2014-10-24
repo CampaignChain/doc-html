@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Activity and Operation Modules &mdash; CampaignChain 1.0.0-alpha.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0-alpha.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CampaignChain 1.0.0-alpha.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Developer Book" href="index.html" />
+    <link rel="next" title="Call to Action (CTA) Tracking" href="cta.html" />
+    <link rel="prev" title="Channel and Location Modules" href="channels_locations.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cta.html" title="Call to Action (CTA) Tracking"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="channels_locations.html" title="Channel and Location Modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="activity-and-operation-modules">
+<h1>Activity and Operation Modules<a class="headerlink" href="#activity-and-operation-modules" title="Permalink to this headline">¶</a></h1>
+<p>This document provides an overview of concepts that developers should
+know when developing Activity and Operation modules.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Every Activity must include at least one Operation and at least one Job.</p>
+</div>
+<div class="section" id="naming-conventions-activity">
+<h2>Naming Conventions (Activity)<a class="headerlink" href="#naming-conventions-activity" title="Permalink to this headline">¶</a></h2>
+<p><em>composer.json</em></p>
+<ul>
+<li><p class="first">The <em>name</em> parameter should be of the form
+[application name or vendor name]/activity-[bundle purpose].</p>
+<p><em>Example: campaignchain/activity-twitter</em></p>
+</li>
+<li><p class="first">The <em>type</em> parameter should be &#8216;campaignchain-activity&#8217;.</p>
+</li>
+</ul>
+<p><em>campaignchain.yml</em></p>
+<ul>
+<li><p class="first">The name of an Activity module should follow the convention
+[application name or vendor name]-[channel name]-[bundle purpose].</p>
+<p><em>Example: campaignchain-twitter-update-status</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="naming-conventions-operation">
+<h2>Naming Conventions (Operation)<a class="headerlink" href="#naming-conventions-operation" title="Permalink to this headline">¶</a></h2>
+<p><em>composer.json</em></p>
+<ul>
+<li><p class="first">The <em>name</em> parameter should be of the form
+[application name or vendor name]/operation-[bundle purpose].</p>
+<p><em>Example: campaignchain/operation-twitter</em></p>
+</li>
+<li><p class="first">The <em>type</em> parameter should be &#8216;campaignchain-operation&#8217;.</p>
+</li>
+</ul>
+<p><em>campaignchain.yml</em></p>
+<ul>
+<li><p class="first">The name of an Operation module should follow the convention
+[application name or vendor name]-[channel name]-[operation descriptor].</p>
+<p><em>Example: campaignchain-twitter-update-status</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="linking-activities-and-channels">
+<h2>Linking Activities and Channels<a class="headerlink" href="#linking-activities-and-channels" title="Permalink to this headline">¶</a></h2>
+<p>The Activity bundle&#8217;s <em>campaignchain.yml</em> file should contain a
+<em>channels</em> parameter, which specifies the link between the Channel and the
+Activity. The <em>channels</em> parameter should be of the form
+[channel bundle name]/[channel module name]</p>
+<p><em>Example: &#8216;acme/channel-linkedin/acme-linkedin&#8217; refers to the Channel bundle
+&#8216;acme/channel-linkedin&#8217; and the Channel module within it named &#8216;acme-linkedin&#8217;.</em></p>
+</div>
+<div class="section" id="wizards-and-routes">
+<h2>Wizards and Routes<a class="headerlink" href="#wizards-and-routes" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain provides a set of &#8220;wizards&#8221; that ease integration of your module
+into the CampaignChain GUI. The Activity Wizard takes care of presenting the user
+with a form that lists available campaigns, channels and operations. Based
+on the user&#8217;s selection in the form, the Activity Wizard is able to retrieve
+and display the available Operations for the selected Channel and link it
+to the selected Campaign.</p>
+<p>The Activity Wizard can be invoked from within a controller using the service
+identifier &#8216;campaignchain.core.activity.wizard&#8217; as shown below.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// invoke and use activity wizard</span>
+<span class="nv">$wizard</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.activity.wizard&#39;</span><span class="p">);</span>
+<span class="nv">$campaign</span> <span class="o">=</span> <span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">getCampaign</span><span class="p">();</span>
+<span class="nv">$activity</span> <span class="o">=</span> <span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">getActivity</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The routes and display name used by the Activity Wizard are obtained from
+the module configuration in the Activity bundle&#8217;s <em>campaignchain.yml</em> file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">modules</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">campaignchain-linkedin-share-news-item</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">display_name</span><span class="p-Indicator">:</span> <span class="s">&#39;Share</span><span class="nv"> </span><span class="s">News&#39;</span>
+      <span class="l-Scalar-Plain">channels</span><span class="p-Indicator">:</span>
+          <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">campaignchain/channel-linkedin/campaignchain-linkedin</span>
+      <span class="l-Scalar-Plain">routes</span><span class="p-Indicator">:</span>
+          <span class="l-Scalar-Plain">new</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_linkedin_share_news_item_new</span>
+          <span class="l-Scalar-Plain">edit</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_linkedin_share_news_item_edit</span>
+          <span class="l-Scalar-Plain">edit_modal</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_linkedin_share_news_item_edit_modal</span>
+          <span class="l-Scalar-Plain">edit_api</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_linkedin_share_news_item_edit_api</span>
+      <span class="l-Scalar-Plain">hooks</span><span class="p-Indicator">:</span>
+          <span class="l-Scalar-Plain">campaignchain-due</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="activities-with-a-single-operation">
+<h2>Activities with a Single Operation<a class="headerlink" href="#activities-with-a-single-operation" title="Permalink to this headline">¶</a></h2>
+<p>If an Activity has only one Operation, this should be made explicit by calling
+the Activity object&#8217;s setEqualsOperation() method, as shown below:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$wizard</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.activity.wizard&#39;</span><span class="p">);</span>
+<span class="nv">$activity</span> <span class="o">=</span> <span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">getActivity</span><span class="p">();</span>
+<span class="nv">$activity</span><span class="o">-&gt;</span><span class="na">setEqualsOperation</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operation-form">
+<h2>Operation Form<a class="headerlink" href="#operation-form" title="Permalink to this headline">¶</a></h2>
+<p>When a user defines a new operation, CampaignChain renders a form with fields appropriate
+to that operation. This form must be included within the Operation module.
+The easiest way to create this form is by using Symfony&#8217;s Form component
+and FormBuilder interface to define a Form object, as shown below:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\ContainerInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ShareNewsItemOperationType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;property_path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;message&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Message&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;attr&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Add message...&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;max_length&#39;</span> <span class="o">=&gt;</span> <span class="mi">200</span>
+                <span class="p">)</span>
+            <span class="p">));</span>
+
+        <span class="nv">$builder</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;submitUrl&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;property_path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;linkUrl&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;URL of page being shared&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;attr&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Add URL...&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;max_length&#39;</span> <span class="o">=&gt;</span> <span class="mi">255</span>
+                <span class="p">)</span>
+            <span class="p">));</span>
+
+        <span class="c1">// ... and so on //</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This Form object can then be used within controller action methods to create
+or edit a new operation, as shown below:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$activityType</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.form.type.activity&#39;</span><span class="p">);</span>
+<span class="nv">$shareNewsItemOperation</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ShareNewsItemOperationType</span><span class="p">(</span>
+   <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getManager</span><span class="p">(),</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;service_container&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$operationForms</span><span class="p">[]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+   <span class="s1">&#39;identifier&#39;</span> <span class="o">=&gt;</span> <span class="nx">self</span><span class="o">::</span><span class="na">OPERATION_IDENTIFIER</span><span class="p">,</span>
+   <span class="s1">&#39;form&#39;</span> <span class="o">=&gt;</span> <span class="nv">$shareNewsItemOperation</span><span class="p">,</span>
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;LinkedIn Message&#39;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="nv">$activityType</span><span class="o">-&gt;</span><span class="na">setOperationForms</span><span class="p">(</span><span class="nv">$operationForms</span><span class="p">);</span>
+
+<span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="nv">$activityType</span><span class="p">,</span> <span class="nv">$activity</span><span class="p">);</span>
+<span class="nv">$form</span><span class="o">-&gt;</span><span class="na">handleRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+      <span class="c1">// process input</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operation-module-and-service">
+<h2>Operation Module and Service<a class="headerlink" href="#operation-module-and-service" title="Permalink to this headline">¶</a></h2>
+<p>The Activity object&#8217;s <em>addOperation()</em> method should be passed an Operation
+object representing the operation to be added to the activity. CampaignChain&#8217;s
+Operation service can be used to retrieve the correct Operation module,
+using the Operation bundle name and module identifier. The Operation service
+is available using the identifier &#8216;campaignchain.core.operation&#8217;.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$operationService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.operation&#39;</span><span class="p">);</span>
+<span class="nv">$operationModule</span> <span class="o">=</span> <span class="nv">$operationService</span><span class="o">-&gt;</span><span class="na">getOperationModule</span><span class="p">(</span>
+  <span class="s1">&#39;campaignchain/operation-linkedin&#39;</span><span class="p">,</span> <span class="s1">&#39;campaignchain-linkedin-share-news-item&#39;</span>
+<span class="p">);</span>
+
+<span class="nv">$operation</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Operation</span><span class="p">();</span>
+<span class="nv">$operation</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="nv">$activity</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">());</span>
+<span class="nv">$operation</span><span class="o">-&gt;</span><span class="na">setActivity</span><span class="p">(</span><span class="nv">$activity</span><span class="p">);</span>
+<span class="nv">$activity</span><span class="o">-&gt;</span><span class="na">addOperation</span><span class="p">(</span><span class="nv">$operation</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this example, the Operation service finds the Operation module named
+&#8216;campaignchain-linkedin-share-news-item&#8217; in the bundle named &#8216;campaignchain/operation-linkedin&#8217;.</p>
+</div>
+<div class="section" id="jobs">
+<h2>Jobs<a class="headerlink" href="#jobs" title="Permalink to this headline">¶</a></h2>
+<p>Every Operation module should include a Job, which actually executes the
+operation. This Job should implement the JobServiceInterface, which mandates
+an <em>execute()</em> method that is called when the job is executed. The Job is
+invoked by the CampaignChain scheduler when an Operation becomes due; it can also
+be invoked manually to execute an operation immediately.</p>
+</div>
+<div class="section" id="hooks">
+<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h2>
+<p>To process the hooks associated with an Activity, CampaignChain makes a Hook
+service available, via the service name &#8216;campaignchain.core.hook&#8217;. Call this service&#8217;s
+<em>processHooks()</em> method to process the hooks for an Activity, as shown below:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$hookService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.hook&#39;</span><span class="p">);</span>
+<span class="nv">$activity</span> <span class="o">=</span> <span class="nv">$hookService</span><span class="o">-&gt;</span><span class="na">processHooks</span><span class="p">(</span>
+  <span class="nx">self</span><span class="o">::</span><span class="na">BUNDLE_NAME</span><span class="p">,</span> <span class="nx">self</span><span class="o">::</span><span class="na">MODULE_IDENTIFIER</span><span class="p">,</span> <span class="nv">$activity</span><span class="p">,</span> <span class="nv">$data</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operations-and-locations">
+<h2>Operations and Locations<a class="headerlink" href="#operations-and-locations" title="Permalink to this headline">¶</a></h2>
+<p>An Operation can create a new Location as its end result and/or it can include
+CTAs that point to Locations. For example, a LinkedIn news sharing Operation
+would create a new Location - a Linkedin status message that is directly
+accessible via a unique URL.</p>
+<p>When you create a new Activity within CampaignChain, your Operation should also
+create a Location entry. At the time the Activity is created, the Location
+entry will necessarily be incomplete as the URL to the Location will not be
+known.</p>
+<p>Once the Operation is executed, the Job that executes it must update the
+Location with the URL. It must also change the Location&#8217;s status from
+&#8216;STATUS_UNPUBLISHED&#8217; to &#8216;STATUS_ACTIVE&#8217;.</p>
+<p>It&#8217;s important to define the <em>owns_location</em> parameter in the Operation module&#8217;s
+<em>campaignchain.yml</em> file as shown below:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">modules</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">campaignchain-linkedin-share-news-item</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">display_name</span><span class="p-Indicator">:</span> <span class="s">&#39;Share</span><span class="nv"> </span><span class="s">News&#39;</span>
+      <span class="l-Scalar-Plain">owns_location</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+      <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+          <span class="l-Scalar-Plain">job</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain.operation.linkedin.job.share_news_item</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Activity and Operation Modules</a><ul>
+<li><a class="reference internal" href="#naming-conventions-activity">Naming Conventions (Activity)</a></li>
+<li><a class="reference internal" href="#naming-conventions-operation">Naming Conventions (Operation)</a></li>
+<li><a class="reference internal" href="#linking-activities-and-channels">Linking Activities and Channels</a></li>
+<li><a class="reference internal" href="#wizards-and-routes">Wizards and Routes</a></li>
+<li><a class="reference internal" href="#activities-with-a-single-operation">Activities with a Single Operation</a></li>
+<li><a class="reference internal" href="#operation-form">Operation Form</a></li>
+<li><a class="reference internal" href="#operation-module-and-service">Operation Module and Service</a></li>
+<li><a class="reference internal" href="#jobs">Jobs</a></li>
+<li><a class="reference internal" href="#hooks">Hooks</a></li>
+<li><a class="reference internal" href="#operations-and-locations">Operations and Locations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="channels_locations.html"
+                        title="previous chapter">Channel and Location Modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cta.html"
+                        title="next chapter">Call to Action (CTA) Tracking</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cta.html" title="Call to Action (CTA) Tracking"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="channels_locations.html" title="Channel and Location Modules"
+             >previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

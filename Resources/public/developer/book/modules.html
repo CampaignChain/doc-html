@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module Basics &mdash; CampaignChain 1.0.0-alpha.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0-alpha.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CampaignChain 1.0.0-alpha.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Developer Book" href="index.html" />
+    <link rel="next" title="Channel and Location Modules" href="channels_locations.html" />
+    <link rel="prev" title="What is CampaignChain?" href="overview.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="channels_locations.html" title="Channel and Location Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="What is CampaignChain?"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-basics">
+<h1>Module Basics<a class="headerlink" href="#module-basics" title="Permalink to this headline">¶</a></h1>
+<p>CampaignChain uses a modular architecture, allowing developers to integrate any
+online channel along with its locations, activities and operations.</p>
+<p>This document provides an overview of common concepts that developers should
+know when developing CampaignChain modules, e.g. for custom channels, locations,
+activities and operations.</p>
+<div class="section" id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="symfony">
+<h3>Symfony<a class="headerlink" href="#symfony" title="Permalink to this headline">¶</a></h3>
+<p>CampaignChain has been built on top of the PHP-based <a class="reference external" href="http://symfony.com/">Symfony framework</a>.
+Therefore, custom modules should also be developed with Symfony.</p>
+</div>
+<div class="section" id="doctrine">
+<h3>Doctrine<a class="headerlink" href="#doctrine" title="Permalink to this headline">¶</a></h3>
+<p>Within Symfony, CampaignChain uses <a class="reference external" href="http://doctrine-project.org">Doctrine</a> as
+its Object-Relation Mapper (ORM). This allows usage of various databases
+in the back-end.</p>
+</div>
+<div class="section" id="bootstrap-3">
+<h3>Bootstrap 3<a class="headerlink" href="#bootstrap-3" title="Permalink to this headline">¶</a></h3>
+<p>CampaignChain&#8217;s GUI is based on <a class="reference external" href="http://getbootstrap.com">Bootstrap 3</a> and module
+developers should follow its best practices of responsive design.</p>
+</div>
+</div>
+<div class="section" id="types-of-modules">
+<h2>Types of Modules<a class="headerlink" href="#types-of-modules" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain&#8217;s core can be extended through various types of modules, each covering
+a certain feature set. The following pre-defined types exist:</p>
+<ul class="simple">
+<li><em>Activity</em>, e.g. post on Facebook or Twitter.</li>
+<li><em>Campaign</em>, to develop custom campaign functionality (e.g. nurtured campaigns).</li>
+<li><em>Channel</em>, to connect to channels such as Facebook or Twitter.</li>
+<li><em>Location</em>, to manage e.g. various Facebook pages.</li>
+<li><em>Milestone</em>, e.g. to develop a new kind of milestone besides the default
+one with a due date.</li>
+<li><em>Operation</em>, similar to Activity module type.</li>
+<li><em>Report</em>, to create custom analytics, budget or sales reports for ROI monitoring.</li>
+<li><em>Security</em>, e.g. functionality for channels to log in to third-party systems.</li>
+<li><em>Distribution</em>, an aggregation of bundles and system-wide configuration, e.g.
+the <a class="reference external" href="https://github.com/CampaignChain/distribution-ce">CampaignChain Community Edition</a>.</li>
+</ul>
+<p>The concepts in this document apply to all types of modules.</p>
+<ul class="simple">
+<li>For information specific to building channel and location modules, refer to
+the <a class="reference external" href="channels_locations.rst">Channels and Locations</a> page.</li>
+<li>For information specific to building activity and operation modules, refer to
+the <a class="reference external" href="activities_operations.rst">Activities and Operations</a> page.</li>
+</ul>
+</div>
+<div class="section" id="packaging">
+<h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain modules are developed as <a class="reference external" href="http://symfony.com/doc/current/cookbook/bundles/index.html">Symfony bundles</a>. One Symfony bundle must contain
+at least one CampaignChain module and can contain various CampaignChain modules of the
+same type.</p>
+<p>To allow CampaignChain to install a bundle along with its module(s), the bundle
+must contain the following two configuration files in its root:</p>
+<ul class="simple">
+<li><em>composer.json</em>: CampaignChain modules (residing inside a Symfony bundle), are
+installed/distributed as <a class="reference external" href="https://getcomposer.org">Composer</a> packages. This file holds information relevant to Composer.</li>
+<li><em>campaignchain.yml</em>: This file holds all the CampaignChain-specific module
+configuration parameters.</li>
+</ul>
+<p>Since CampaignChain is built on top of the Symfony framework, modules can use
+functionality provided by other modules mainly through <a class="reference external" href="http://symfony.com/doc/current/book/service_container.html">Symfony services</a>.</p>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline">¶</a></h2>
+<p>The version number of module packages for CampaignChain must follow the syntax
+laid out in the <a class="reference external" href="http://semver.org/">Semantic Versioning</a> specification.</p>
+</div>
+<div class="section" id="bundle-generation">
+<h2>Bundle Generation<a class="headerlink" href="#bundle-generation" title="Permalink to this headline">¶</a></h2>
+<p>When building an CampaignChain module, the first step is to <a class="reference external" href="http://symfony.com/doc/current/bundles/SensioGeneratorBundle/commands/generate_bundle.html">create a new Symfony
+bundle</a>.</p>
+</div>
+<div class="section" id="configuration-files">
+<h2>Configuration Files<a class="headerlink" href="#configuration-files" title="Permalink to this headline">¶</a></h2>
+<p>Every bundle with CampaignChain modules must have the following two configuration
+files, which are essential for CampaignChain to correctly identify and integrate
+the included module(s).</p>
+<p>These files must be located in the root of the bundle directory.</p>
+<div class="section" id="composer-json">
+<h3>composer.json<a class="headerlink" href="#composer-json" title="Permalink to this headline">¶</a></h3>
+<p>The bundle&#8217;s <em>composer.json</em> file follows standard Composer conventions.
+The <em>type</em> parameter must belong to the set of pre-defined module types as
+outlined previously. Here is a list of parameters typically seen in this file:</p>
+<ul class="simple">
+<li>require: A list of package dependencies</li>
+<li>description: A human-readable description for the bundle</li>
+<li>keywords: Additional descriptive keywords for the bundle</li>
+<li>homepage: A link to the bundles&#8217;s website</li>
+<li>license: The license under which the bundle and its modules are made available</li>
+<li>authors: A list of package authors</li>
+</ul>
+<p><em>Example:</em></p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;campaignchain/channel-twitter&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Connect with Twitter.&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;twitter&quot;</span><span class="p">,</span><span class="s2">&quot;oauth&quot;</span><span class="p">],</span>
+   <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;campaignchain-channel&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;homepage&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.groganz.com&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;Proprietary&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;authors&quot;</span><span class="p">:</span> <span class="p">[</span>
+       <span class="p">{</span>
+           <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandro Groganz&quot;</span><span class="p">,</span>
+           <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;sandro@campaignchain.com&quot;</span>
+       <span class="p">}</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;campaignchain/core&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;campaignchain/security-authentication-client-oauth&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In addition to the <a class="reference external" href="https://getcomposer.org/doc/04-schema.md">schema of the composer.json file</a> developers of CampaignChain
+modules should also follow the best practices outlined below.</p>
+<div class="section" id="parameter-name">
+<h4>Parameter <em>name</em><a class="headerlink" href="#parameter-name" title="Permalink to this headline">¶</a></h4>
+<p>The name of the bundle. Typically this is the application name or vendor
+name, followed by a separating slash (/), then the module type followed
+by a dash and the bundle&#8217;s purpose.</p>
+<p>The schematic representation of the syntax is:
+&lt;application or vendor name&gt;/&lt;bundle type&gt;-&lt;purpose of bundle&gt;</p>
+<p><em>Example: campaignchain/channel-twitter</em></p>
+</div>
+<div class="section" id="parameter-type">
+<h4>Parameter <em>type</em><a class="headerlink" href="#parameter-type" title="Permalink to this headline">¶</a></h4>
+<p>The type of the bundle, which must be one of</p>
+<ul class="simple">
+<li>campaignchain-channel</li>
+<li>campaignchain-location</li>
+<li>campaignchain-activity</li>
+<li>campaignchain-operation</li>
+<li>campaignchain-report</li>
+<li>campaignchain-campaign</li>
+<li>campaignchain-security</li>
+<li>campaignchain-milestone</li>
+</ul>
+<p>Custom types are not supported and CampaignChain will display an error if it
+encounters a type value outside the above allowed set.</p>
+</div>
+<div class="section" id="other-parameters-required-by-campaignchain">
+<h4>Other Parameters Required by CampaignChain<a class="headerlink" href="#other-parameters-required-by-campaignchain" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>description: A human-readable description for the bundle</li>
+<li>keywords: Additional descriptive keywords for the bundle</li>
+<li>homepage: A link to the bundles&#8217;s website</li>
+<li>license: The license under which the bundle and its modules are made available</li>
+<li>authors: A list of package authors</li>
+</ul>
+</div>
+</div>
+<div class="section" id="campaignchain-yml">
+<h3>campaignchain.yml<a class="headerlink" href="#campaignchain-yml" title="Permalink to this headline">¶</a></h3>
+<p>The bundle&#8217;s <em>campaignchain.yml</em> file specifies all CampaignChain modules contained in
+the bundle. Per module, it defines parameters such as the internal name of
+the module, used to reference it from other modules, as well as any associated
+<a class="reference external" href="http://symfony.com/doc/current/book/routing.html">Symfony routes</a> and <a class="reference external" href="http://symfony.com/doc/current/book/service_container.html">Symfony services</a> or CampaignChain hooks. The information in
+the file varies depending on the module type and requirements.</p>
+<p>The typical structure of the <em>campaignchain.yml</em> file is as follows:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">modules</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">[</span><span class="nv">module-name</span><span class="p-Indicator">]:</span>
+    <span class="l-Scalar-Plain">display_name</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">display name</span><span class="p-Indicator">]</span>
+    <span class="l-Scalar-Plain">channels</span><span class="p-Indicator">:</span>
+      <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">channel identifier</span><span class="p-Indicator">]</span>
+      <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">channel identifier</span><span class="p-Indicator">]</span>
+      <span class="l-Scalar-Plain">...</span>
+    <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">job</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">service identifier</span><span class="p-Indicator">]</span>
+    <span class="l-Scalar-Plain">routes</span><span class="p-Indicator">:</span>
+      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">new</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">route identifier</span><span class="p-Indicator">]</span>
+      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">edit</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">route identifier</span><span class="p-Indicator">]</span>
+      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">edit_modal</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">route identifier</span><span class="p-Indicator">]</span>
+      <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">edit_api</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">route identifier</span><span class="p-Indicator">]</span>
+    <span class="l-Scalar-Plain">hooks</span><span class="p-Indicator">:</span>
+      <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">hook-name</span><span class="p-Indicator">]:</span> <span class="p-Indicator">[</span><span class="nv">true|false</span><span class="p-Indicator">]</span>
+      <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">hook-name</span><span class="p-Indicator">]:</span> <span class="p-Indicator">[</span><span class="nv">true|false</span><span class="p-Indicator">]</span>
+      <span class="l-Scalar-Plain">...</span>
+  <span class="p-Indicator">[</span><span class="nv">module-name</span><span class="p-Indicator">]:</span>
+    <span class="l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+<p><em>Example: An activity module&#8217;s campaignchain.yml file lists the channels the
+activity belongs to and the Symfony routes to create and edit new activities.</em></p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">modules</span><span class="p-Indicator">:</span>
+   <span class="l-Scalar-Plain">campaignchain-twitter-update-status</span><span class="p-Indicator">:</span>
+       <span class="l-Scalar-Plain">display_name</span><span class="p-Indicator">:</span> <span class="s">&#39;Update</span><span class="nv"> </span><span class="s">Status&#39;</span>
+       <span class="l-Scalar-Plain">channels</span><span class="p-Indicator">:</span>
+           <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">campaignchain/channel-twitter/campaignchain-twitter</span>
+       <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+           <span class="l-Scalar-Plain">job</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain.activity.twitter.job.update_status</span>
+       <span class="l-Scalar-Plain">routes</span><span class="p-Indicator">:</span>
+           <span class="l-Scalar-Plain">new</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_twitter_update_status_new</span>
+           <span class="l-Scalar-Plain">edit</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_twitter_update_status_edit</span>
+           <span class="l-Scalar-Plain">edit_modal</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_twitter_update_status_edit_modal</span>
+           <span class="l-Scalar-Plain">edit_api</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_activity_twitter_update_status_edit_api</span>
+       <span class="l-Scalar-Plain">hooks</span><span class="p-Indicator">:</span>
+           <span class="l-Scalar-Plain">campaignchain-due</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+           <span class="l-Scalar-Plain">campaignchain-duration</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+           <span class="l-Scalar-Plain">campaignchain-assignee</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<div class="section" id="module-identifier">
+<h4>Module Identifier<a class="headerlink" href="#module-identifier" title="Permalink to this headline">¶</a></h4>
+<p>The module&#8217;s identifier should be provided as the child of the <em>modules</em>
+parameter. Multiple modules can be specified in this way. The recommended
+syntax of the module identifier is to use dashes (-) to separate words,
+which helps to separate it from the parameters which use underscores.
+Furthermore, the identifier should start with an application or vendor
+name followed by a string that best captures the purpose of the module.</p>
+<p>In sum, the recommended syntax is:
+&lt;application or vendor name&gt;-&lt;purpose of module&gt;</p>
+<p><em>Example: campaignchain-twitter-update-status</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is important to note that <strong>the module identifier must be unique per
+module type across bundles</strong>. In other words: In a bundle, only CampaignChain
+modules of the same type are allowed and the identifier of each module
+must be unique in all bundles containing the same type of modules.</p>
+</div>
+</div>
+<div class="section" id="parameter-display-name">
+<h4>Parameter <em>display_name</em><a class="headerlink" href="#parameter-display-name" title="Permalink to this headline">¶</a></h4>
+<p>All modules have to specify the module name that will be displayed in
+CampaignChain&#8217;s graphical user interface by providing a string as the value of
+the <em>display_name</em> parameter.</p>
+</div>
+<div class="section" id="parameter-services">
+<h4>Parameter <em>services</em><a class="headerlink" href="#parameter-services" title="Permalink to this headline">¶</a></h4>
+<p>A module can define the following services to be consumed by CampaignChain.</p>
+<ul class="simple">
+<li>job: This service will be called by CampaignChain&#8217;s scheduler to automatically
+execute functionality, e.g. publishing a scheduled post to Twitter.</li>
+</ul>
+</div>
+<div class="section" id="parameter-routes">
+<h4>Parameter <em>routes</em><a class="headerlink" href="#parameter-routes" title="Permalink to this headline">¶</a></h4>
+<p>Within the <em>campaignchain.yml</em> configuration file, CampaignChain recognizes four types
+of Symfony routes.</p>
+<ul class="simple">
+<li>new: The route to invoke when creating a new (channel/location/activity/operation)</li>
+<li>edit: The route to invoke when editing an existing (channel/location/activity/operation)</li>
+<li>edit_modal: The route to invoke for the pop-up view of the &#8216;edit&#8217; route</li>
+<li>edit_api: The route to invoke for the submit action of the &#8216;edit_modal&#8217; route</li>
+</ul>
+</div>
+<div class="section" id="parameter-hooks">
+<h4>Parameter <em>hooks</em><a class="headerlink" href="#parameter-hooks" title="Permalink to this headline">¶</a></h4>
+<p>Hooks can be assigned to a module by specifying the hook&#8217;s identifier and
+<em>true</em> to activate it or <em>false</em> to deactivate it. If a hook is omitted,
+CampaignChain will regard it as inactive.</p>
+</div>
+<div class="section" id="parameters-specific-to-a-module-type">
+<h4>Parameters Specific to a Module Type<a class="headerlink" href="#parameters-specific-to-a-module-type" title="Permalink to this headline">¶</a></h4>
+<p>Some module types require certain parameters in the <em>campaignchain.yml</em> configuration
+file to be defined. For example, an Activity module should list at least one
+related channel module. Similarly, an Operation module must define
+whether it creates a Location or not. You will find more detailed information in the
+documentation related to a specific module type.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module Basics</a><ul>
+<li><a class="reference internal" href="#framework">Framework</a><ul>
+<li><a class="reference internal" href="#symfony">Symfony</a></li>
+<li><a class="reference internal" href="#doctrine">Doctrine</a></li>
+<li><a class="reference internal" href="#bootstrap-3">Bootstrap 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#types-of-modules">Types of Modules</a></li>
+<li><a class="reference internal" href="#packaging">Packaging</a></li>
+<li><a class="reference internal" href="#versioning">Versioning</a></li>
+<li><a class="reference internal" href="#bundle-generation">Bundle Generation</a></li>
+<li><a class="reference internal" href="#configuration-files">Configuration Files</a><ul>
+<li><a class="reference internal" href="#composer-json">composer.json</a><ul>
+<li><a class="reference internal" href="#parameter-name">Parameter <em>name</em></a></li>
+<li><a class="reference internal" href="#parameter-type">Parameter <em>type</em></a></li>
+<li><a class="reference internal" href="#other-parameters-required-by-campaignchain">Other Parameters Required by CampaignChain</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#campaignchain-yml">campaignchain.yml</a><ul>
+<li><a class="reference internal" href="#module-identifier">Module Identifier</a></li>
+<li><a class="reference internal" href="#parameter-display-name">Parameter <em>display_name</em></a></li>
+<li><a class="reference internal" href="#parameter-services">Parameter <em>services</em></a></li>
+<li><a class="reference internal" href="#parameter-routes">Parameter <em>routes</em></a></li>
+<li><a class="reference internal" href="#parameter-hooks">Parameter <em>hooks</em></a></li>
+<li><a class="reference internal" href="#parameters-specific-to-a-module-type">Parameters Specific to a Module Type</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">What is CampaignChain?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="channels_locations.html"
+                        title="next chapter">Channel and Location Modules</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="channels_locations.html" title="Channel and Location Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="What is CampaignChain?"
+             >previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Channel and Location Modules &mdash; CampaignChain 1.0.0-alpha.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0-alpha.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CampaignChain 1.0.0-alpha.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Developer Book" href="index.html" />
+    <link rel="next" title="Activity and Operation Modules" href="activities_operations.html" />
+    <link rel="prev" title="Module Basics" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="activities_operations.html" title="Activity and Operation Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Module Basics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="channel-and-location-modules">
+<h1>Channel and Location Modules<a class="headerlink" href="#channel-and-location-modules" title="Permalink to this headline">¶</a></h1>
+<p>This document provides an overview of concepts that developers should
+know when developing Channel and Location modules.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Every Channel must include at least one Location.</p>
+</div>
+<div class="section" id="naming-conventions-channel">
+<h2>Naming Conventions (Channel)<a class="headerlink" href="#naming-conventions-channel" title="Permalink to this headline">¶</a></h2>
+<p><em>composer.json</em></p>
+<ul>
+<li><p class="first">The <em>name</em> parameter should be of the form
+[application name or vendor name]/channel-[channel name].</p>
+<p><em>Example: campaignchain/channel-twitter</em></p>
+</li>
+<li><p class="first">The <em>type</em> parameter should be &#8216;campaignchain-channel&#8217;.</p>
+</li>
+</ul>
+<p><em>campaignchain.yml</em></p>
+<ul>
+<li><p class="first">The name of a Channel module should follow the convention
+[application name or vendor name]-[channel name].</p>
+<p><em>Example: campaignchain-twitter</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="naming-conventions-location">
+<h2>Naming Conventions (Location)<a class="headerlink" href="#naming-conventions-location" title="Permalink to this headline">¶</a></h2>
+<p><em>composer.json</em></p>
+<ul>
+<li><p class="first">The <em>name</em> parameter should be of the form
+[application name or vendor name]/location-[channel name]-[bundle purpose].</p>
+<p><em>Example: campaignchain/location-twitter-status-update</em></p>
+</li>
+<li><p class="first">The <em>type</em> parameter should be &#8216;campaignchain-location&#8217;.</p>
+</li>
+</ul>
+<p><em>campaignchain.yml</em></p>
+<ul>
+<li><p class="first">The name of a Location module should follow the convention
+[application name or vendor name]-[channel name]-[location descriptor].</p>
+<p><em>Example: campaignchain-twitter-user</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="wizards-and-routes">
+<h2>Wizards and Routes<a class="headerlink" href="#wizards-and-routes" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain provides a set of &#8220;wizards&#8221; that ease integration of your module
+into the CampaignChain GUI. The Channel Wizard takes care of redirecting the
+client browser to the appropriate routes when creating or editing a channel
+and/or location.</p>
+<p>Channel and Location module developers should use the Channel Wizard as a
+convenient way to attach and persist a new location for a channel. The Channel
+Wizard can be invoked from within a controller using the service identifier
+&#8216;campaignchain.core.channel.wizard&#8217; as shown below.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="c1">// invoke and use channel wizard</span>
+<span class="nv">$wizard</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.channel.wizard&#39;</span><span class="p">);</span>
+<span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="nv">$profile</span><span class="o">-&gt;</span><span class="na">displayName</span><span class="p">);</span>
+<span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">addLocation</span><span class="p">(</span><span class="nv">$location</span><span class="o">-&gt;</span><span class="na">getIdentifier</span><span class="p">(),</span> <span class="nv">$location</span><span class="p">);</span>
+<span class="nv">$channel</span> <span class="o">=</span> <span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">();</span>
+<span class="nv">$wizard</span><span class="o">-&gt;</span><span class="na">end</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The route used by the Channel Wizard is obtained from the module configuration
+in the Channel bundle&#8217;s <em>campaignchain.yml</em> file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">modules</span><span class="p-Indicator">:</span>
+   <span class="l-Scalar-Plain">campaignchain-linkedin</span><span class="p-Indicator">:</span>
+       <span class="l-Scalar-Plain">display_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">LinkedIn</span>
+       <span class="l-Scalar-Plain">routes</span><span class="p-Indicator">:</span>
+           <span class="l-Scalar-Plain">new</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_channel_linkedin_create</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="location-module-and-service">
+<h2>Location Module and Service<a class="headerlink" href="#location-module-and-service" title="Permalink to this headline">¶</a></h2>
+<p>The Channel Wizard&#8217;s <em>addLocation()</em> method should be passed a Location
+object representing the location to be added to the channel. CampaignChain&#8217;s
+Location service can be used to retrieve the correct Location module,
+using the Location bundle name and Location module identifier. The
+location service is available using the identifier &#8216;campaignchain.core.location&#8217;.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$locationService</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;campaignchain.core.location&#39;</span><span class="p">);</span>
+<span class="nv">$locationModule</span> <span class="o">=</span> <span class="nv">$locationService</span><span class="o">-&gt;</span><span class="na">getLocationModule</span><span class="p">(</span>
+  <span class="s1">&#39;campaignchain/location-linkedin&#39;</span><span class="p">,</span> <span class="s1">&#39;campaignchain-linkedin-user&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this example, the Location service finds the Location module named
+&#8216;campaignchain-linkedin-user&#8217; in the bundle named &#8216;campaignchain/location-linkedin&#8217;.</p>
+</div>
+<div class="section" id="channel-authentication">
+<h2>Channel Authentication<a class="headerlink" href="#channel-authentication" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain provides an OAuthBundle (based on HybridAuth) which can be used
+for OAuth-based authentication with online channels. The client can be
+accessed as a Symfony service using the service identifier &#8216;campaignchain.security.authentication.client.oauth.application&#8217;.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$oauthApp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span>
+  <span class="s1">&#39;campaignchain.security.authentication.client.oauth.application&#39;</span><span class="p">);</span>
+<span class="nv">$application</span> <span class="o">=</span> <span class="nv">$oauthApp</span><span class="o">-&gt;</span><span class="na">getApplication</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">RESOURCE_OWNER</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$application</span><span class="p">){</span>
+   <span class="k">return</span> <span class="nv">$oauthApp</span><span class="o">-&gt;</span><span class="na">newApplicationTpl</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">RESOURCE_OWNER</span><span class="p">,</span>
+     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">applicationInfo</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+       <span class="s1">&#39;CampaignChainChannelLinkedInBundle:Create:index.html.twig&#39;</span><span class="p">,</span>
+       <span class="k">array</span><span class="p">(</span>
+           <span class="s1">&#39;page_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Connect with LinkedIn&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;app_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$application</span><span class="o">-&gt;</span><span class="na">getKey</span><span class="p">(),</span>
+       <span class="p">)</span>
+   <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The client&#8217;s <em>getApplication()</em> method retrieves any existing channel
+credentials (that were previously configured) from the CampaignChain database.
+In case no such credentials exist (such as the first time a location is
+created), the <em>getApplicationTpl()</em> method generates a Web form for the
+user to input the required data.</p>
+<p>CampaignChain also provides an OAuth authentication client via the &#8216;campaignchain.security.authentication.client.oauth.authentication&#8217;
+identifier. The client&#8217;s <em>authenticate()</em> method can be used to perform
+authentication against the remote service.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$oauth</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span>
+  <span class="s1">&#39;campaignchain.security.authentication.client.oauth.authentication&#39;</span><span class="p">);</span>
+<span class="nv">$status</span> <span class="o">=</span> <span class="nv">$oauth</span><span class="o">-&gt;</span><span class="na">authenticate</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">RESOURCE_OWNER</span><span class="p">,</span>
+  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">applicationInfo</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">CampaignChain&#8217;s OAuthBundle is an optional bundle to ease authentication with
+third-party services. Developers are free to implement their own authentication
+client, or use third-party clients as needed.</p>
+</div>
+</div>
+<div class="section" id="channel-icon">
+<h2>Channel Icon<a class="headerlink" href="#channel-icon" title="Permalink to this headline">¶</a></h2>
+<p>Each Channel module must provide a channel icon image in PNG format with
+size 16x16 pixels. The image file must reside in the <em>your-project/src/your-bundle-namespace/Resources/public/images/icons/16x16/</em>
+folder of the bundle and the image&#8217;s file name should match the descriptive
+string used at the end of the bundle name.</p>
+<p><em>Example: The bundle named &#8216;campaignchain/channel-google&#8217; would have its icon
+reside at your-project/src/Acme/CampaignChain/Channel/GoogleBundle/Resources/public/images/icons/16x16/google.png.</em></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Channel and Location Modules</a><ul>
+<li><a class="reference internal" href="#naming-conventions-channel">Naming Conventions (Channel)</a></li>
+<li><a class="reference internal" href="#naming-conventions-location">Naming Conventions (Location)</a></li>
+<li><a class="reference internal" href="#wizards-and-routes">Wizards and Routes</a></li>
+<li><a class="reference internal" href="#location-module-and-service">Location Module and Service</a></li>
+<li><a class="reference internal" href="#channel-authentication">Channel Authentication</a></li>
+<li><a class="reference internal" href="#channel-icon">Channel Icon</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">Module Basics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="activities_operations.html"
+                        title="next chapter">Activity and Operation Modules</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="activities_operations.html" title="Activity and Operation Modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Module Basics"
+             >previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Developer Book</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

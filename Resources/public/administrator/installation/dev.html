@@ -1,0 +1,711 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development &mdash; CampaignChain 1.0.0-alpha.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0-alpha.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CampaignChain 1.0.0-alpha.1 documentation" href="../../index.html" />
+    <link rel="up" title="Installation" href="index.html" />
+    <link rel="next" title="Configuration" href="../configuration/index.html" />
+    <link rel="prev" title="Community Edition (CE)" href="ce.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../configuration/index.html" title="Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ce.html" title="Community Edition (CE)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Installation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h1>
+<p>If you would like to develop modules with CampaignChain, this page will explain
+how to install and configure all the relevant parts to get started.</p>
+<div class="section" id="prerequisites">
+<h2>0. Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>Verify that your system meets the <a class="reference internal" href="../requirements.html"><em>minimum system requirements</em></a>
+to run CampaignChain.</p>
+</div>
+<div class="section" id="install-composer">
+<h2>1. Install Composer<a class="headerlink" href="#install-composer" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain utilizes Composer for PHP package management.</p>
+<p><a class="reference external" href="https://getcomposer.org/download/">Install Composer</a> to be able to install and update CampaignChain and related
+packages.</p>
+</div>
+<div class="section" id="install-bower">
+<h2>2. Install Bower<a class="headerlink" href="#install-bower" title="Permalink to this headline">¶</a></h2>
+<p>For JavaScript components, CampaignChain makes use of Bower, which - you guessed
+it - is a package manager for JavaScript code.</p>
+<p>Before you can install Bower, you must first <a class="reference external" href="http://nodejs.org/">install npm</a> which ships with
+node.js.</p>
+<p>Now install Bower through npm:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>npm install -g bower
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-database">
+<h2>3. Set up Database<a class="headerlink" href="#set-up-database" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain has been tested to work with MySQL at the current point in time.
+Hence, please set up a MySQL server and create a new database for CampaignChain.</p>
+</div>
+<div class="section" id="install-and-configure-symfony">
+<h2>4. Install and Configure Symfony<a class="headerlink" href="#install-and-configure-symfony" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain is based on the Symfony PHP framework.</p>
+<p>Hence, first <a class="reference external" href="http://symfony.com/doc/current/book/installation.html">install Symfony through Composer</a>.</p>
+<div class="section" id="get-yui-compressor-and-cssembed">
+<h3>4.1 Get YUI Compressor and CSSEmbed<a class="headerlink" href="#get-yui-compressor-and-cssembed" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/yui/yuicompressor/releases">Download YUI Compressor</a> and install it into <em>app/Resources/java/yuicompressor.jar</em>.</p>
+<p><a class="reference external" href="https://github.com/nzakas/cssembed/downloads">Get CSSEmbed</a> and save it in <em>app/Resources/java/cssembed.jar</em>.</p>
+</div>
+<div class="section" id="download-packages">
+<h3>4.2 Download Packages<a class="headerlink" href="#download-packages" title="Permalink to this headline">¶</a></h3>
+<p>Open the <em>composer.json</em> file in your Symfony root in an editor of your choice.</p>
+<p>To be able to install development versions of CampaignChain packages, you should
+specify the <tt class="docutils literal"><span class="pre">minimum-stability</span></tt> parameter in <em>composer.json</em> accordingly.</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;minimum-stability&quot;: &quot;dev&quot;,
+</pre></div>
+</div>
+<p>Add the minimum required CampaignChain Composer packages to <em>composer.json</em>
+in the Symfony root to have a fully functional CampaignChain installation.</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;require&quot;: {
+    &quot;campaignchain/core&quot;: &quot;dev-master&quot;,
+    &quot;campaignchain/campaign-scheduled&quot;: &quot;dev-master&quot;,
+    &quot;campaignchain/milestone-scheduled&quot;: &quot;dev-master&quot;,
+    &quot;campaignchain/report-analytics-metrics-per-activity&quot;: &quot;dev-master&quot;
+}
+</pre></div>
+</div>
+<p>If you would like to add additional CampaignChain packages to your installation,
+feel free to <a class="reference external" href="https://packagist.org/search/?q=campaignchain">search for them on Packagist</a>.</p>
+<p>Still in <em>composer.json</em>, add the post install and update scripts for the
+<a class="reference external" href="https://github.com/braincrafted/bootstrap-bundle">BraincraftedBootstrapBundle</a> and the <a class="reference external" href="https://github.com/Spea/SpBowerBundle">SpBowerBundle</a>.</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;scripts&quot;: {
+    &quot;post-install-cmd&quot;: [
+        &quot;Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install&quot;,
+        &quot;Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall&quot;
+    ],
+    &quot;post-update-cmd&quot;: [
+        &quot;Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install&quot;,
+        &quot;Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall&quot;
+    ]
+},
+</pre></div>
+</div>
+<p>Then also add the Hybridauth library to the <tt class="docutils literal"><span class="pre">autoloader</span></tt> parameter in
+<em>composer.json</em>, so that CampaignChain can use it.</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;autoload&quot;: {
+    &quot;classmap&quot;: [&quot;vendor/hybridauth/hybridauth/hybridauth&quot;]
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="enable-the-bundles">
+<h3>4.3 Enable the Bundles<a class="headerlink" href="#enable-the-bundles" title="Permalink to this headline">¶</a></h3>
+<p>Edit the <em>app/AppKernel.php</em> file and add the following lines inside the
+<tt class="docutils literal"><span class="pre">registerBundles()</span></tt> method to register the newly installed packages as Symfony
+bundles.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),</span>
+<span class="x">new Knp\Bundle\MenuBundle\KnpMenuBundle(),</span>
+<span class="x">new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),</span>
+<span class="x">new SC\DatetimepickerBundle\SCDatetimepickerBundle(),</span>
+<span class="x">new FOS\UserBundle\FOSUserBundle(),</span>
+<span class="x">new CampaignChain\CoreBundle\CampaignChainCoreBundle(),</span>
+<span class="x">new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),</span>
+<span class="x">new h4cc\AliceFixturesBundle\h4ccAliceFixturesBundle(),</span>
+<span class="x">new FOS\JsRoutingBundle\FOSJsRoutingBundle(),</span>
+<span class="x">new CampaignChain\Report\Analytics\MetricsPerActivityBundle\CampaignChainReportAnalyticsMetricsPerActivityBundle(),</span>
+<span class="x">new CampaignChain\Hook\DueBundle\CampaignChainHookDueBundle(),</span>
+<span class="x">new CampaignChain\Hook\AssigneeBundle\CampaignChainHookAssigneeBundle(),</span>
+<span class="x">new CampaignChain\Campaign\ScheduledCampaignBundle\CampaignChainCampaignScheduledCampaignBundle(),</span>
+<span class="x">new CampaignChain\Milestone\ScheduledMilestoneBundle\CampaignChainMilestoneScheduledMilestoneBundle(),</span>
+<span class="x">new CampaignChain\Hook\DurationBundle\CampaignChainHookDurationBundle(),</span>
+<span class="x">new Hpatoio\BitlyBundle\HpatoioBitlyBundle(),</span>
+<span class="x">new Sp\BowerBundle\SpBowerBundle(),</span>
+</pre></div>
+</div>
+<p>If you have previously specified additional CampaignChain packages in
+<em>composer.json</em>, then make sure you also register them here.</p>
+<p>For your convenience, here&#8217;s a list of other official bundles available for
+CampaignChain that you could include in <em>app/AppKernel.php</em>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">new CampaignChain\Channel\FacebookBundle\CampaignChainChannelFacebookBundle(),</span>
+<span class="x">new CampaignChain\Security\Authentication\Client\OAuthBundle\CampaignChainSecurityAuthenticationClientOAuthBundle(),</span>
+<span class="x">new CampaignChain\Activity\FacebookBundle\CampaignChainActivityFacebookBundle(),</span>
+<span class="x">new CampaignChain\Channel\TwitterBundle\CampaignChainChannelTwitterBundle(),</span>
+<span class="x">new CampaignChain\Activity\TwitterBundle\CampaignChainActivityTwitterBundle(),</span>
+<span class="x">new CampaignChain\Operation\FacebookBundle\CampaignChainOperationFacebookBundle(),</span>
+<span class="x">new CampaignChain\Operation\TwitterBundle\CampaignChainOperationTwitterBundle(),</span>
+<span class="x">new CampaignChain\Location\TwitterBundle\CampaignChainLocationTwitterBundle(),</span>
+<span class="x">new CampaignChain\Location\FacebookBundle\CampaignChainLocationFacebookBundle(),</span>
+<span class="x">new CampaignChain\Channel\LinkedInBundle\CampaignChainChannelLinkedInBundle(),</span>
+<span class="x">new CampaignChain\Location\LinkedInBundle\CampaignChainLocationLinkedInBundle(),</span>
+<span class="x">new CampaignChain\Channel\WebsiteBundle\CampaignChainChannelWebsiteBundle(),</span>
+<span class="x">new CampaignChain\Activity\LinkedInBundle\CampaignChainActivityLinkedInBundle(),</span>
+<span class="x">new CampaignChain\Operation\LinkedInBundle\CampaignChainOperationLinkedInBundle(),</span>
+<span class="x">new CampaignChain\Location\WebsiteBundle\CampaignChainLocationWebsiteBundle(),</span>
+<span class="x">new CampaignChain\DistributionCeBundle\CampaignChainDistributionCeBundle(),</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-configuration-options-to-config-yml">
+<h3>4.4 Add Configuration Options to <em>config.yml</em><a class="headerlink" href="#add-configuration-options-to-config-yml" title="Permalink to this headline">¶</a></h3>
+<p>Configure the Symfony application as follows.</p>
+<p>First, add the <em>assetic.yml</em> file which we are going to create later on top
+of <em>config.yml</em> to the files it is supposed to import.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">assetic.yml</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+<p>Beneath the <tt class="docutils literal"><span class="pre">framework</span></tt> parameter, specify the <tt class="docutils literal"><span class="pre">translator</span></tt> configuration:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">translator</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+</pre></div>
+</div>
+<p>As part of the Twig configuration, specify a form template provided by
+CampaignChain.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">twig</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">resources</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="s">&#39;CampaignChainCoreBundle:Form:fields.html.twig&#39;</span>
+</pre></div>
+</div>
+<p>Specify the core bundle of CampaignChain within the Assetic configuration.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">assetic</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">bundles</span><span class="p-Indicator">:</span>        <span class="p-Indicator">[</span><span class="s">&#39;CampaignChainCoreBundle&#39;</span><span class="p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Add the following configurations at the end of the <em>config.yml</em>. If you already
+have some of the options configured, make sure you streamline it with the
+configurations below.</p>
+<div class="highlight-yaml"><div class="highlight"><pre># app/config/config.yml
+braincrafted_bootstrap:
+    output_dir:
+    assets_dir: %kernel.root_dir%/../vendor/twitter/bootstrap
+    #assets_dir: %kernel.root_dir%/../vendor/twbs/bootstrap
+    jquery_path: %kernel.root_dir%/../components/jquery/jquery.js
+    less_filter: lessphp # &quot;less&quot;, &quot;lessphp&quot; or &quot;none&quot;
+    auto_configure:
+        assetic: true
+        twig: true
+        knp_menu: true
+        knp_paginator: true
+    customize:
+        variables_file: ~
+        bootstrap_output: %kernel.root_dir%/../vendor/twitter/less/bootstrap.less
+        bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
+
+sc_datetimepicker:
+    picker: ~
+
+# FOS User Configuration
+fos_user:
+    db_driver: orm # other valid values are &#39;mongodb&#39;, &#39;couchdb&#39; and &#39;propel&#39;
+    firewall_name: main
+    user_class: CampaignChain\CoreBundle\Entity\User
+    group:
+        group_class: CampaignChain\CoreBundle\Entity\Group
+
+hpatoio_bitly:
+    # You Bitly access token. Visit [this page](https://bitly.com/a/oauth_apps) to get it.
+    access_token: insert_here_you_bitly_access_token
+
+    # These parameters are optionals !
+
+    # Turn the profiler off
+    profiler:
+
+    # Turn file log on and specify log format
+    file_log_format: default
+
+sp_bower:
+    assetic:
+        enabled: false
+    bundles:
+        CampaignChainCoreBundle: ~
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-assetic-yml">
+<h3>4.5 Create <em>assetic.yml</em><a class="headerlink" href="#create-assetic-yml" title="Permalink to this headline">¶</a></h3>
+<p>Create a new file named <em>assetic.yml</em> in <em>app/config/</em> and include the following
+content.</p>
+<div class="highlight-yaml"><div class="highlight"><pre># app/config/assetic.yml
+assetic:
+  java: /usr/bin/java
+  filters:
+    cssembed:
+      jar: %kernel.root_dir%/Resources/java/cssembed.jar
+    yui_js:
+      jar: %kernel.root_dir%/Resources/java/yuicompressor.jar
+    lessphp:
+      file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
+      apply_to: &quot;\.less$&quot;
+  assets:
+    campaignchain_base_css:
+        inputs:
+          - &#39;@CampaignChainCoreBundle/Resources/public/css/campaignchain/base.css&#39;
+    campaignchain_base_js:
+        inputs:
+          - &#39;@CampaignChainCoreBundle/Resources/public/js/campaignchain/base.js&#39;
+          - &#39;@CampaignChainCoreBundle/Resources/public/components/ScrollToFixed/jquery-scrolltofixed.js&#39;
+    jquery_js:
+        inputs:
+            - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+        filters: [?yui_js]
+    moment_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/moment/moment.js&#39;
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/moment-timezone/builds/moment-timezone-with-data.js&#39;
+    bootstrap_js:
+        inputs:
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/transition.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/alert.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/modal.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/dropdown.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/scrollspy.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/tab.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/tooltip.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/popover.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/button.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/collapse.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/carousel.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/js/affix.js&#39;
+        filters: [?yui_js]
+    bootstrap_less:
+        inputs:
+            - &#39;%kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less&#39;
+        filters: [lessphp,cssembed]
+    braincrafted_bootstrap:
+        less_filter: lessphp
+    select2_js:
+        inputs:
+            - &#39;%kernel.root_dir%/..//vendor/ivaynberg/select2/select2.js&#39;
+    select2_css:
+        inputs:
+            - &#39;%kernel.root_dir%/../vendor/ivaynberg/select2/select2.css&#39;
+            - &#39;%kernel.root_dir%/../vendor/ivaynberg/select2/select2-bootstrap.css&#39;
+    datatables_js:
+        inputs:
+            - &#39;%kernel.root_dir%/../vendor/datatables/datatables/media/js/jquery.dataTables.js&#39;
+            - &#39;%kernel.root_dir%/../vendor/datatables/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js&#39;
+    datatables_css:
+        inputs:
+            - &#39;%kernel.root_dir%/../vendor/datatables/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css&#39;
+    daterangepicker_js:
+        inputs:
+          - &#39;@CampaignChainCoreBundle/Resources/public/components/bootstrap-daterangepicker/daterangepicker.js&#39;
+    daterangepicker_css:
+        inputs:
+          - &#39;@CampaignChainCoreBundle/Resources/public/components/bootstrap-daterangepicker/daterangepicker-bs3.css&#39;
+    # DHTMLXGantt
+    dhtmlxgantt_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/gantt/codebase/dhtmlxgantt.js&#39;
+    dhtmlxgantt_tooltip_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/gantt/codebase/ext/dhtmlxgantt_tooltip.js&#39;
+    campaignchain_dhtmlxgantt_toolbar_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/js/campaignchain/dhtmlxgantt/toolbar.js&#39;
+    campaignchain_dhtmlxgantt_pre_init_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/js/campaignchain/dhtmlxgantt/pre_init.js&#39;
+    campaignchain_dhtmlxgantt_post_init_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/js/campaignchain/dhtmlxgantt/post_init.js&#39;
+    dhtmlxgantt_css:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/gantt/codebase/dhtmlxgantt.css&#39;
+    flot_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/flot/jquery.flot.js&#39;
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/flot/jquery.flot.time.js&#39;
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/flot/jquery.flot.symbol.js&#39;
+    flot_comments_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/jquery.flot.comments/jquery.flot.comments.js&#39;
+    flot_tooltip_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/flot.tooltip/js/jquery.flot.tooltip.js&#39;
+    campaignchain_flot_css:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/css/campaignchain/flot.css&#39;
+    fullcalendar_js:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/fullcalendar/dist/fullcalendar.js&#39;
+    fullcalendar_css:
+        inputs:
+            - &#39;@CampaignChainCoreBundle/Resources/public/components/fullcalendar/dist/fullcalendar.css&#39;
+  bundles:
+    - CampaignChainCoreBundle
+    - CampaignChainReportAnalyticsMetricsPerActivityBundle
+    - FOSUserBundle
+    - CampaignChainMilestoneScheduledMilestoneBundle
+</pre></div>
+</div>
+</div>
+<div class="section" id="specify-security-yml">
+<h3>4.6 Specify <em>security.yml</em><a class="headerlink" href="#specify-security-yml" title="Permalink to this headline">¶</a></h3>
+<p>Replace everything that is already in the <em>app/config/security.yml</em> file with
+the below configuration.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">role_hierarchy</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">ROLE_ADMIN</span><span class="p-Indicator">:</span>       <span class="l-Scalar-Plain">ROLE_USER</span>
+        <span class="l-Scalar-Plain">ROLE_SUPER_ADMIN</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ROLE_ADMIN</span>
+
+    <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">fos_userbundle</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">fos_user.user_provider.username</span>
+
+    <span class="l-Scalar-Plain">encoders</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">FOS\UserBundle\Model\UserInterface</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sha512</span>
+
+    <span class="c1"># set access_strategy to unanimous, else you may have unexpected behaviors</span>
+    <span class="l-Scalar-Plain">access_decision_manager</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">strategy</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">unanimous</span>
+
+    <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
+        <span class="c1"># defaut login area for standard users</span>
+        <span class="l-Scalar-Plain">main</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">^/</span>
+            <span class="l-Scalar-Plain">form_login</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">provider</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">fos_userbundle</span>
+                <span class="l-Scalar-Plain">csrf_provider</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">form.csrf_provider</span>
+                <span class="l-Scalar-Plain">login_path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/login</span>
+            <span class="l-Scalar-Plain">logout</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+            <span class="l-Scalar-Plain">anonymous</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">true</span>
+
+    <span class="l-Scalar-Plain">access_control</span><span class="p-Indicator">:</span>
+       <span class="c1"># URL of FOSUserBundle which need to be available to anonymous users</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/_wdt</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/_profiler</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/login$</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/admin/</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">ROLE_ADMIN</span> <span class="p-Indicator">}</span>
+
+        <span class="c1"># AsseticBundle paths used when using the controller for assets</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/js/</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/css/</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+
+        <span class="c1"># URL of FOSUserBundle which need to be available to anonymous users</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/register</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/resetting</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+
+        <span class="c1"># Secured part of the site</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/</span><span class="p-Indicator">,</span> <span class="nv">role</span><span class="p-Indicator">:</span> <span class="nv">ROLE_USER</span> <span class="p-Indicator">}</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-the-routes">
+<h3>4.7 Add the Routes<a class="headerlink" href="#add-the-routes" title="Permalink to this headline">¶</a></h3>
+<p>In the <em>app/config/routing.yml</em> file, add the following routes for the minimum
+required packages to develop with CampaignChain.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">groganz_campaignchain_hook_duration</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainHookDurationBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_milestone_scheduled_milestone</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainMilestoneScheduledMilestoneBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_campaign_scheduled_campaign</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainCampaignScheduledCampaignBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_hook_assignee</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainHookAssigneeBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_hook_due</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainHookDueBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_report_analytics_metrics_per_activity</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainReportAnalyticsMetricsPerActivityBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_core</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainCoreBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+</pre></div>
+</div>
+<p>If you previously added more CampaignChain packages to <em>composer.json</em>, make
+sure you also add the corresponding routes.</p>
+<p>Here are the routing entries for all other official CampaignChain bundles
+currently available:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">groganz_campaignchain_location_website</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainLocationWebsiteBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_operation_linked_in</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainOperationLinkedInBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_activity_linked_in</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainActivityLinkedInBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_channel_website</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainChannelWebsiteBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_location_linked_in</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainLocationLinkedInBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_channel_linked_in</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainChannelLinkedInBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_location_facebook</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainLocationFacebookBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_location_twitter_user</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainLocationTwitterBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_operation_twitter</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainOperationTwitterBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_operation_facebook</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainOperationFacebookBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_activity_twitter</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainActivityTwitterBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_channel_twitter</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainChannelTwitterBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_activity_facebook</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainActivityFacebookBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_security_authentication_client_o_auth</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainSecurityAuthenticationClientOAuthBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+
+<span class="l-Scalar-Plain">groganz_campaignchain_channel_facebook</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@CampaignChainChannelFacebookBundle/Resources/config/routing.yml&quot;</span>
+    <span class="l-Scalar-Plain">prefix</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-composer-and-bower">
+<h3>4.8 Run Composer and Bower<a class="headerlink" href="#run-composer-and-bower" title="Permalink to this headline">¶</a></h3>
+<p>Run Composer from inside the Symfony root to install the CampaignChain packages.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>composer update
+</pre></div>
+</div>
+<p>It might take a couple of minutes for Composer to download and install all
+required packages.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Should Composer display the &#8220;Your requirements could not be resolved to an
+installable set of packages&#8221; error and the cause is that it cannot
+properly resolve the <tt class="docutils literal"><span class="pre">symfony/symfony</span></tt> dependency, then using the ~ operator
+in the version definition might help. For example, change <tt class="docutils literal"><span class="pre">&quot;2.5.*&quot;</span></tt> to <tt class="docutils literal"><span class="pre">&quot;~2.5&quot;</span></tt> for
+<tt class="docutils literal"><span class="pre">&quot;symfony/symfony&quot;</span></tt> in <em>composer.json</em>.</p>
+</div>
+<p>To run Bower and install the required JavaScript packages, execute this command
+from within Symfony&#8217;s root.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console sp:bower:install
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-bitly-access-token">
+<h2>5. Get Bitly Access Token<a class="headerlink" href="#get-bitly-access-token" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain&#8217;s CTA tracking mechanism uses Bitly to shorten URLs that contain
+the tracking ID.</p>
+<p>Please request a Bitly access token here: <a class="reference external" href="https://bitly.com/a/oauth_apps">https://bitly.com/a/oauth_apps</a></p>
+<p>Next, open the file <em>app/config/config.yml</em> in CampaignChain and replace
+<tt class="docutils literal"><span class="pre">insert_here_you_bitly_access_token</span></tt> with the access token you requested.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">hpatoio_bitly</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">access_token</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">insert_here_you_bitly_access_token</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dump-and-install-assets">
+<h2>6. Dump and Install Assets<a class="headerlink" href="#dump-and-install-assets" title="Permalink to this headline">¶</a></h2>
+<p>Make Symfony move assets such as JavaScript and CSS files as well as images to
+the <em>web/</em> directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console assets:install web
+<span class="nv">$ </span>php app/console assetic:dump
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-scheduler">
+<h2>7. Configure Scheduler<a class="headerlink" href="#configure-scheduler" title="Permalink to this headline">¶</a></h2>
+<p>The CampaignChain scheduler is a PHP script that executes scheduled Operations.</p>
+<p>On Linux or Mac OS X, configure it as a <a class="reference external" href="http://en.wikipedia.org/wiki/Cron">cron job</a> so that it runs automatically
+every minute:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>crontab -e -u &lt;username&gt;
+*/1 * * * * /usr/bin/php /path/to/symfony2/app/console campaignchain:scheduler
+</pre></div>
+</div>
+<p>On Windows, you could use the <a class="reference external" href="http://technet.microsoft.com/en-us/library/bb726974.aspx">task scheduler or AT command</a> to achieve the same.</p>
+</div>
+<div class="section" id="create-database-tables">
+<h2>8. Create Database Tables<a class="headerlink" href="#create-database-tables" title="Permalink to this headline">¶</a></h2>
+<p>In case you did not already specify database access credentials when installing
+Symfony through Composer, please do so now in <em>app/config/parameters.yml</em>.</p>
+<p>Run this command inside the Symfony root to create the CampaignChain database
+tables.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:schema:update --force
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-server">
+<h2>9. Start Server<a class="headerlink" href="#start-server" title="Permalink to this headline">¶</a></h2>
+<p>Use PHP&#8217;s built-in web server to run CampaignChain.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console server:run
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-in-as-admin">
+<h2>10. Log in as Admin<a class="headerlink" href="#log-in-as-admin" title="Permalink to this headline">¶</a></h2>
+<p>Create an admin account with this command inside the Symfony root. Replace
+<tt class="docutils literal"><span class="pre">you&#64;example.com</span></tt> and <tt class="docutils literal"><span class="pre">yourpassword</span></tt> with the email and password you prefer.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console fos:user:create admin --super-admin you@example.com yourpassword
+</pre></div>
+</div>
+<p>Point your Web browser to <a class="reference external" href="http://localhost:8000/">http://localhost:8000/</a> and log in with username
+<tt class="docutils literal"><span class="pre">admin</span></tt> and the password you provided in the above command.</p>
+</div>
+<div class="section" id="install-modules">
+<h2>11. Install Modules<a class="headerlink" href="#install-modules" title="Permalink to this headline">¶</a></h2>
+<p>Visit the module installation screen at <a class="reference external" href="http://localhost:8000/system/modules/">http://localhost:8000/system/modules/</a>
+and install all modules.</p>
+</div>
+<div class="section" id="start-developing">
+<h2>Start Developing!<a class="headerlink" href="#start-developing" title="Permalink to this headline">¶</a></h2>
+<p>You can now <a class="reference internal" href="../../developer/book/index.html"><em>start developing with CampaignChain</em></a> and create your
+own bundles that include CampaignChain modules in the <em>src/</em> directory inside
+the Symfony root.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development</a><ul>
+<li><a class="reference internal" href="#prerequisites">0. Prerequisites</a></li>
+<li><a class="reference internal" href="#install-composer">1. Install Composer</a></li>
+<li><a class="reference internal" href="#install-bower">2. Install Bower</a></li>
+<li><a class="reference internal" href="#set-up-database">3. Set up Database</a></li>
+<li><a class="reference internal" href="#install-and-configure-symfony">4. Install and Configure Symfony</a><ul>
+<li><a class="reference internal" href="#get-yui-compressor-and-cssembed">4.1 Get YUI Compressor and CSSEmbed</a></li>
+<li><a class="reference internal" href="#download-packages">4.2 Download Packages</a></li>
+<li><a class="reference internal" href="#enable-the-bundles">4.3 Enable the Bundles</a></li>
+<li><a class="reference internal" href="#add-configuration-options-to-config-yml">4.4 Add Configuration Options to <em>config.yml</em></a></li>
+<li><a class="reference internal" href="#create-assetic-yml">4.5 Create <em>assetic.yml</em></a></li>
+<li><a class="reference internal" href="#specify-security-yml">4.6 Specify <em>security.yml</em></a></li>
+<li><a class="reference internal" href="#add-the-routes">4.7 Add the Routes</a></li>
+<li><a class="reference internal" href="#run-composer-and-bower">4.8 Run Composer and Bower</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-bitly-access-token">5. Get Bitly Access Token</a></li>
+<li><a class="reference internal" href="#dump-and-install-assets">6. Dump and Install Assets</a></li>
+<li><a class="reference internal" href="#configure-scheduler">7. Configure Scheduler</a></li>
+<li><a class="reference internal" href="#create-database-tables">8. Create Database Tables</a></li>
+<li><a class="reference internal" href="#start-server">9. Start Server</a></li>
+<li><a class="reference internal" href="#log-in-as-admin">10. Log in as Admin</a></li>
+<li><a class="reference internal" href="#install-modules">11. Install Modules</a></li>
+<li><a class="reference internal" href="#start-developing">Start Developing!</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ce.html"
+                        title="previous chapter">Community Edition (CE)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../configuration/index.html"
+                        title="next chapter">Configuration</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../configuration/index.html" title="Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ce.html" title="Community Edition (CE)"
+             >previous</a> |</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
+          <li><a href="index.html" >Installation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>
