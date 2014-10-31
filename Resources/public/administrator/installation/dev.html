@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Development &mdash; CampaignChain 1.0.0-alpha.1 documentation</title>
+    <title>Development &mdash; CampaignChain 1.0.0-alpha.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.0-alpha.1',
+        VERSION:     '1.0.0-alpha.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="CampaignChain 1.0.0-alpha.1 documentation" href="../../index.html" />
+    <link rel="top" title="CampaignChain 1.0.0-alpha.2 documentation" href="../../index.html" />
     <link rel="up" title="Installation" href="index.html" />
     <link rel="next" title="Configuration" href="../configuration/index.html" />
     <link rel="prev" title="Community Edition (CE)" href="ce.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="ce.html" title="Community Edition (CE)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Installation</a> &raquo;</li> 
       </ul>
@@ -112,6 +112,14 @@ in the Symfony root to have a fully functional CampaignChain installation.</p>
 </div>
 <p>If you would like to add additional CampaignChain packages to your installation,
 feel free to <a class="reference external" href="https://packagist.org/search/?q=campaignchain">search for them on Packagist</a>.</p>
+<p>For your convenience, here&#8217;s a list of all currently available additional
+CampaignChain packages, which will install other packages required by them:</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;campaignchain/activity-facebook&quot;: &quot;dev-master&quot;,
+&quot;campaignchain/activity-linkedin&quot;: &quot;dev-master&quot;,
+&quot;campaignchain/activity-twitter&quot;: &quot;dev-master&quot;,
+&quot;campaignchain/doc-html&quot;: &quot;dev-master&quot;
+</pre></div>
+</div>
 <p>Still in <em>composer.json</em>, add the post install and update scripts for the
 <a class="reference external" href="https://github.com/braincrafted/bootstrap-bundle">BraincraftedBootstrapBundle</a> and the <a class="reference external" href="https://github.com/Spea/SpBowerBundle">SpBowerBundle</a>.</p>
 <div class="highlight-json"><div class="highlight"><pre>&quot;scripts&quot;: {
@@ -543,11 +551,13 @@ currently available:</p>
 required packages.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Should Composer display the &#8220;Your requirements could not be resolved to an
+<p>Should Composer display the &#8220;Your requirements could not be resolved to an
 installable set of packages&#8221; error and the cause is that it cannot
 properly resolve the <tt class="docutils literal"><span class="pre">symfony/symfony</span></tt> dependency, then using the ~ operator
 in the version definition might help. For example, change <tt class="docutils literal"><span class="pre">&quot;2.5.*&quot;</span></tt> to <tt class="docutils literal"><span class="pre">&quot;~2.5&quot;</span></tt> for
 <tt class="docutils literal"><span class="pre">&quot;symfony/symfony&quot;</span></tt> in <em>composer.json</em>.</p>
+<p class="last">In case you run into a <tt class="docutils literal"><span class="pre">Allowed</span> <span class="pre">memory</span> <span class="pre">size</span> <span class="pre">of</span> <span class="pre">XXXXXX</span> <span class="pre">bytes</span> <span class="pre">exhausted</span></tt> error,
+please <a class="reference external" href="https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors">increase the PHP memory limit</a>.</p>
 </div>
 <p>To run Bower and install the required JavaScript packages, execute this command
 from within Symfony&#8217;s root.</p>
@@ -565,7 +575,7 @@ the tracking ID.</p>
 <tt class="docutils literal"><span class="pre">insert_here_you_bitly_access_token</span></tt> with the access token you requested.</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">hpatoio_bitly</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">access_token</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">insert_here_you_bitly_access_token</span>
+    <span class="l-Scalar-Plain">access_token</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">insert_here_your_bitly_access_token</span>
 </pre></div>
 </div>
 </div>
@@ -700,7 +710,7 @@ the Symfony root.</p>
         <li class="right" >
           <a href="ce.html" title="Community Edition (CE)"
              >previous</a> |</li>
-        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
           <li><a href="index.html" >Installation</a> &raquo;</li> 
       </ul>
