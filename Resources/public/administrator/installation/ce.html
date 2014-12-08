@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Community Edition (CE) &mdash; CampaignChain 1.0.0-alpha.2 documentation</title>
+    <title>Community Edition (CE) &mdash; CampaignChain 1.0.0-alpha.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0.0-alpha.2',
+        VERSION:     '1.0.0-alpha.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="CampaignChain 1.0.0-alpha.2 documentation" href="../../index.html" />
+    <link rel="top" title="CampaignChain 1.0.0-alpha.3 documentation" href="../../index.html" />
     <link rel="up" title="Installation" href="index.html" />
     <link rel="next" title="Development" href="dev.html" />
     <link rel="prev" title="Installation" href="index.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="index.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Installation</a> &raquo;</li> 
       </ul>
@@ -68,102 +68,57 @@ to run CampaignChain.</li>
 <h2>1. Download CampaignChain<a class="headerlink" href="#download-campaignchain" title="Permalink to this headline">¶</a></h2>
 <p>Download the Community Edition from <a class="reference external" href="http://www.campaignchain.com/download">www.campaignchain.com/download</a>.</p>
 <p>Extract the contents of the archive to a directory on your system.</p>
+<p>Make sure that PHP has access to all files in the CampaignChain directory. On
+Linux, you could issue this command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>chown -R www-data:www-data /path/to/campaignchain
+</pre></div>
+</div>
+<p>... with <tt class="docutils literal"><span class="pre">www-data</span></tt> being the HTTP server&#8217;s user and group, respectively.</p>
 </div>
 <div class="section" id="set-up-database">
 <h2>2. Set up Database<a class="headerlink" href="#set-up-database" title="Permalink to this headline">¶</a></h2>
-<p>Launch the MySQL command-line client and create a new MySQL database for the
+<p>Launch your MySQL client of choice and create a new MySQL database for the
 application.</p>
-<div class="highlight-mysql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">campaignchain_db</span><span class="p">;</span>
-</pre></div>
 </div>
-<p>At the same time, create a user with full privileges to the new database, as
-shown below:</p>
-<div class="highlight-mysql"><div class="highlight"><pre><span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">on</span> <span class="n">campaignchain_db</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;campaignchain&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;gue55me&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>Edit the <em>app/config/parameters.yml</em> file and define the database host, name,
-user and password.</p>
-<p><em>Example:</em></p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">pdo_mysql</span>
-    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">127.0.0.1</span>
-    <span class="l-Scalar-Plain">database_port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">null</span>
-    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain_db</span>
-    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">campaignchain</span>
-    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">gue55me</span>
-</pre></div>
-</div>
-<p>From within the application&#8217;s root directory, issue the following command which
-will create the table structures in the database:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:schema:update --force
+<div class="section" id="install-composer">
+<h2>3. Install Composer<a class="headerlink" href="#install-composer" title="Permalink to this headline">¶</a></h2>
+<p>CampaignChain utilizes <a class="reference external" href="https://getcomposer.org/download/">Composer</a> for its package and modules management. Install
+it with this command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -sS https://getcomposer.org/installer | php
 </pre></div>
 </div>
 </div>
-<div class="section" id="register-apps-with-various-online-channels">
-<h2>3. Register Apps with Various Online Channels<a class="headerlink" href="#register-apps-with-various-online-channels" title="Permalink to this headline">¶</a></h2>
-<p>To be able to post to Twitter, Facebook and LinkedIn from within CampaignChain,
-register an App with these three services, by following the steps below:</p>
-<ol class="arabic simple">
-<li>Go to the following pages:<ul>
-<li>Twitter: <a class="reference external" href="https://apps.twitter.com">https://apps.twitter.com</a></li>
-<li>Facebook: <a class="reference external" href="https://developers.facebook.com/apps">https://developers.facebook.com/apps</a></li>
-<li>LinkedIn: <a class="reference external" href="https://www.linkedin.com/secure/developer">https://www.linkedin.com/secure/developer</a></li>
-</ul>
-</li>
-<li>Fill out any required fields.</li>
-</ol>
-<p>Once you have registered a new app, you will receive a key and secret that will
-be displayed to you under above pages.</p>
-<p>Now, open the sample data file <em>vendor/campaignchain/distribution-ce/Resources/data/campaignchain/ce.yml</em>
-and replace the text <tt class="docutils literal"><span class="pre">replaceme</span></tt> with the app key and secret provided by Twitter,
-Facebook and LinkedIn.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># vendor/campaignchain/distribution-ce/Resources/data/campaignchain/ce.yml</span>
-<span class="l-Scalar-Plain">\CampaignChain\Security\Authentication\Client\OAuthBundle\Entity\Application</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">application1</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">resourceOwner</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Twitter</span>
-        <span class="c1"># Specify your Twitter Consumer Key and Secret here:</span>
-        <span class="l-Scalar-Plain">key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
-        <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
-    <span class="l-Scalar-Plain">application2</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">resourceOwner</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Facebook</span>
-        <span class="c1"># Specify your Facebook App key and secret here:</span>
-        <span class="l-Scalar-Plain">key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
-        <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
-    <span class="l-Scalar-Plain">application3</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">resourceOwner</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">LinkedIn</span>
-        <span class="c1"># Specify your Facebook App key and secret here:</span>
-        <span class="l-Scalar-Plain">key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
-        <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">replaceme</span>
+<div class="section" id="install-base-system">
+<h2>4. Install Base System<a class="headerlink" href="#install-base-system" title="Permalink to this headline">¶</a></h2>
+<p>In the root of CampaignChain, execute this command (not as root user!):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>composer install
 </pre></div>
 </div>
-<p>Next, execute the below command to load the above sample data into CampaignChain:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console h4cc_alice_fixtures:load:files --manager<span class="o">=</span>default --type<span class="o">=</span>yaml --seed<span class="o">=</span>42 vendor/campaignchain/distribution-ce/Resources/data/campaignchain/ce.yml
+<p>It will download and install all required packages and modules for the
+CampaignChain base system. Please note that this might take a while.</p>
+<p>At the end of the process, you will be asked in the command line to provide some
+configuration parameters. Please make sure you check/provide at least the
+following (default values in brackets):</p>
+<div class="highlight-bash"><div class="highlight"><pre>database_driver <span class="o">(</span>pdo_mysql<span class="o">)</span>:
+database_host <span class="o">(</span>127.0.0.1<span class="o">)</span>:
+database_port <span class="o">(</span>null<span class="o">)</span>:
+database_name <span class="o">(</span>campaignchain_ce<span class="o">)</span>:
+database_user <span class="o">(</span>root<span class="o">)</span>:
+database_password <span class="o">(</span>null<span class="o">)</span>:
+java_path <span class="o">(</span>/usr/bin/java<span class="o">)</span>:
 </pre></div>
 </div>
 </div>
 <div class="section" id="configure-campaignchain-scheduler">
-<h2>4. Configure CampaignChain Scheduler<a class="headerlink" href="#configure-campaignchain-scheduler" title="Permalink to this headline">¶</a></h2>
+<h2>5. Configure CampaignChain Scheduler<a class="headerlink" href="#configure-campaignchain-scheduler" title="Permalink to this headline">¶</a></h2>
 <p>The CampaignChain scheduler is a PHP script that executes scheduled Operations.</p>
 <p>On Linux or Mac OS X, configure it as a <a class="reference external" href="http://en.wikipedia.org/wiki/Cron">cron job</a> so that it runs automatically
 every minute:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>crontab -e -u &lt;username&gt;
-*/1 * * * * /usr/bin/php /path/to/symfony2/app/console campaignchain:scheduler
+*/1 * * * * /usr/bin/php /path/to/campaignchain/app/console campaignchain:scheduler
 </pre></div>
 </div>
 <p>On Windows, you could use the <a class="reference external" href="http://technet.microsoft.com/en-us/library/bb726974.aspx">task scheduler or AT command</a> to achieve the same.</p>
-</div>
-<div class="section" id="get-bitly-access-token">
-<h2>5. Get Bitly Access Token<a class="headerlink" href="#get-bitly-access-token" title="Permalink to this headline">¶</a></h2>
-<p>CampaignChain&#8217;s CTA tracking mechanism uses Bitly to shorten URLs that contain
-the tracking ID.</p>
-<p>Please request a Bitly access token here: <a class="reference external" href="https://bitly.com/a/oauth_apps">https://bitly.com/a/oauth_apps</a></p>
-<p>Next, open the file <em>app/config/config.yml</em> in CampaignChain and replace
-<tt class="docutils literal"><span class="pre">insert_here_you_bitly_access_token</span></tt> with the access token you requested.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
-<span class="l-Scalar-Plain">hpatoio_bitly</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">access_token</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">insert_here_your_bitly_access_token</span>
-</pre></div>
-</div>
 </div>
 <div class="section" id="start-server">
 <h2>6. Start Server<a class="headerlink" href="#start-server" title="Permalink to this headline">¶</a></h2>
@@ -172,18 +127,13 @@ the tracking ID.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="log-in-to-campaignchain">
-<h2>7. Log In to CampaignChain<a class="headerlink" href="#log-in-to-campaignchain" title="Permalink to this headline">¶</a></h2>
-<p>Point your Web browser to <a class="reference external" href="http://localhost:8000/">http://localhost:8000/</a> and log in with:</p>
-<ul class="simple">
-<li><strong>username</strong>: admin</li>
-<li><strong>password</strong>: test</li>
-</ul>
+<div class="section" id="installation-wizard">
+<h2>7. Installation Wizard<a class="headerlink" href="#installation-wizard" title="Permalink to this headline">¶</a></h2>
+<p>Hop over to <a class="reference external" href="http://localhost:8000/campaignchain/install.php">http://localhost:8000/campaignchain/install.php</a> and follow the instructions.</p>
 </div>
 <div class="section" id="install-modules">
 <h2>8. Install Modules<a class="headerlink" href="#install-modules" title="Permalink to this headline">¶</a></h2>
-<p>Visit the module installation screen at <a class="reference external" href="http://localhost:8000/system/modules/">http://localhost:8000/system/modules/</a>
-and install all modules.</p>
+<p>You can easily add modules (e.g. to post on Twitter or Facebook) at <a class="reference external" href="http://localhost:8000/modules/new/">http://localhost:8000/modules/new/</a>.</p>
 </div>
 <div class="section" id="success">
 <h2>Success!<a class="headerlink" href="#success" title="Permalink to this headline">¶</a></h2>
@@ -208,11 +158,11 @@ and install all modules.</p>
 <li><a class="reference internal" href="#preparation">0. Preparation</a></li>
 <li><a class="reference internal" href="#download-campaignchain">1. Download CampaignChain</a></li>
 <li><a class="reference internal" href="#set-up-database">2. Set up Database</a></li>
-<li><a class="reference internal" href="#register-apps-with-various-online-channels">3. Register Apps with Various Online Channels</a></li>
-<li><a class="reference internal" href="#configure-campaignchain-scheduler">4. Configure CampaignChain Scheduler</a></li>
-<li><a class="reference internal" href="#get-bitly-access-token">5. Get Bitly Access Token</a></li>
+<li><a class="reference internal" href="#install-composer">3. Install Composer</a></li>
+<li><a class="reference internal" href="#install-base-system">4. Install Base System</a></li>
+<li><a class="reference internal" href="#configure-campaignchain-scheduler">5. Configure CampaignChain Scheduler</a></li>
 <li><a class="reference internal" href="#start-server">6. Start Server</a></li>
-<li><a class="reference internal" href="#log-in-to-campaignchain">7. Log In to CampaignChain</a></li>
+<li><a class="reference internal" href="#installation-wizard">7. Installation Wizard</a></li>
 <li><a class="reference internal" href="#install-modules">8. Install Modules</a></li>
 <li><a class="reference internal" href="#success">Success!</a></li>
 </ul>
@@ -254,7 +204,7 @@ and install all modules.</p>
         <li class="right" >
           <a href="index.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">CampaignChain 1.0.0-alpha.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Administrator Handbook</a> &raquo;</li>
           <li><a href="index.html" >Installation</a> &raquo;</li> 
       </ul>
